@@ -67,11 +67,6 @@ async function getNextShortUrl() {
 app.post("/api/shorturl", (req, res) => {
   try {
     let urlString = req.body.url;
-  
-    // Add protocol if missing
-    if (!urlString.startsWith('http://') && !urlString.startsWith('https://')) {
-      urlString = 'https://' + urlString;
-    }
 
     const userUrl = new URL(urlString);
     const hostname = userUrl.hostname;

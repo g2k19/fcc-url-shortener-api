@@ -1,4 +1,88 @@
-# fcc - "URL Shortener Microservice" Project
-Note: This repo contains at the moment only the file that needed to be worked on, not the full project to run.
+# URL Shortener Microservice
 
-More information about the actual project can be found on [freeCodeCamp's website](https://www.freecodecamp.org) under the Back End Development and APIs section of the Cirriculum.
+A simple microservice that shortens long URLs and provides redirection to the original URLs. This project is part of the [freeCodeCamp Back End Development and APIs certification](https://www.freecodecamp.org/learn/back-end-development-and-apis/).
+
+## About
+
+This microservice allows users to submit long URLs and receive shortened versions that redirect to the original URLs. The service validates URLs, stores them in a MongoDB database, and provides both shortening and redirection functionality through a RESTful API.
+
+## API Endpoints
+
+### **POST** `/api/shorturl`
+
+Accepts a URL and returns a JSON object with the original URL and a shortened version.
+
+**Request Body:**
+```json
+{
+    "url": "https://www.example.com"
+}
+```
+
+**Response Format:**
+```json
+{
+    "original_url": "https://www.example.com",
+    "short_url": 1
+}
+```
+
+
+### **GET** `/api/shorturl/:short_url`
+
+Redirects to the original URL associated with the provided short URL ID.
+
+**Example:**
+- Visit `/api/shorturl/1` → Redirects to `https://www.example.com`
+
+## Features
+
+- **URL Validation**: Only accepts properly formatted URLs with valid protocols (`http://` or `https://`)
+- **Duplicate Prevention**: Returns existing short URL if the original URL has already been shortened
+- **Error Handling**: Returns `{ error: "invalid url" }` for malformed or unreachable URLs
+- **Database Storage**: Persists URL mappings using MongoDB with Mongoose
+- **Automatic Redirection**: Short URLs automatically redirect users to the original destination
+
+## Implementation Details
+
+The microservice uses Express.js for routing and MongoDB for data persistence. URL validation is performed using the native `URL` constructor and DNS lookup to verify hostname accessibility. Each shortened URL receives a unique numeric identifier that serves as the short URL path.
+
+## Live Demo
+
+[View Live Demo]()
+
+## Getting Started
+
+1. **Clone the repository:**
+```bash
+git clone https://github.com/g2k19/url-shortener-microservice.git
+```
+
+2. **Install dependencies:**
+```bash
+npm install
+```
+
+3. **Set up environment variables:**
+```
+cp .env.example .env
+```
+
+Edit .env with your MongoDB connection string
+
+4. **Start the server:**
+```bash
+npm start
+```
+
+5. **Visit:**
+```
+http://localhost:3000/
+```
+
+## Technologies Used
+
+- **Node.js** - Runtime environment
+- **Express.js** - Web framework
+- **MongoDB** - Database for URL storage
+- **Mongoose** - MongoDB object modeling
